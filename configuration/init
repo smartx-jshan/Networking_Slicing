@@ -1,0 +1,4 @@
+ONOS_IP = 210.125.84.200
+OpenStack_Interface = eno2
+IoT_linux_bridges =
+IoT_Interfaces = eno3, eno4
