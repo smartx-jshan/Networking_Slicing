@@ -1,8 +1,16 @@
 #!/bin/bash
 
 
-echo -n "ONOS IP: "
-read ONOS_IP
+ONOS_IP=`cat init.conf | grep ONOS_IP | awk '{print $3}'`
+
+
+if [ "$ONOS_IP" == "" ]; then
+        echo "You should write your ONOS_IP into \"init.conf\""
+        exit
+fi
+
+#echo -n "ONOS IP: "
+#read ONOS_IP
 
 
 # Activate OpenFlow

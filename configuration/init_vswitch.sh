@@ -1,17 +1,17 @@
 #!/bin/bash
 
 
-ONOS=`cat init | grep ONOS_IP | cut -d '=' -f2`
-OpenStack=`cat init | grep OpenStack_Interface | cut -d '=' -f2`
+ONOS=`cat init.conf | grep ONOS_IP | awk '{print $3}'`
+OpenStack=`cat init.conf | grep OpenStack_Interface | awk '{print $3}'`
 
 
 if [ "$ONOS" == "" ]; then
-	echo "You should write your ONOS_IP into \"init\""
+	echo "You should write your ONOS_IP into \"init.conf\""
         exit
 fi
 
 if [ "$OpenStack" == "" ]; then
-        echo "You should write your OpenStack Interface \"init\""
+        echo "You should write your OpenStack Interface into \"init.conf\""
         exit
 fi
 
@@ -34,14 +34,16 @@ ovs-vsctl add-port br-IoT slicing_patch0 -- set interface slicing_patch0 type=pa
 ovs-vsctl add-port br-vlan $OpenStack
 
 
-Interfaces=`cat init | grep IoT_Interfaces | cut -d '=' -f2 | tr -d ','`
+# Add IoT Interfaces
+Interfaces=`cat init.conf | grep IoT_Interfaces | cut -d '=' -f2 | tr -d ','`
 
 for i in $Interfaces; do
   ovs-vsctl add-port br-IoT $i
 done
 
 
-Bridges=`cat init | grep IoT_linux_bridges | cut -d '=' -f2 | tr -d ','`
+# Add linux bridges
+Bridges=`cat init.conf | grep IoT_linux_bridges | cut -d '=' -f2 | tr -d ','`
 
 for i in $Bridges; do
   ip link add name veth1_$i type veth peer name veth2_$i
