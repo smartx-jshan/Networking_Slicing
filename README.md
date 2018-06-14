@@ -55,7 +55,7 @@ $ ./bootstrap.sh
 ```
 
 ## API Example
-We provides basic network slicing (Create, Delete and get)
+It provides basic functionalities for network slicing (Create, Delete and get)
 
 ### Create
 ```
